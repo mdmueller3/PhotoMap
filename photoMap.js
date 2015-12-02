@@ -1,22 +1,21 @@
-function photomap(posX, posY, width, height){
-	
+function photomap(posX, posY, width, height, scale){
 	var paper = Raphael(posX,posY,width,height);
 
 	paper.setStart();
+	for(var path in usMap){
 
-	for(var path in worldmap.shapes){
+		var state = paper.path(usMap[path]);
+		state.attr("stroke-width",0.5);
 
-		var state = paper.path(worldmap.shapes[path]);
+		var tfm = 'S'.concat(scale).concat(',').concat(scale).concat(',0,0');
 
-		state.attr("stroke-width",0.3);
-
+		state.transform(tfm);
 
 	};
-
 	var elementSet = paper.setFinish();
 
 	var over = function(){
-		this.stop().animate({fill: "#ddffff"},0);
+		this.stop().animate({fill: "#eeffff"},0);
 	};
 
 	var out = function(){
@@ -24,8 +23,11 @@ function photomap(posX, posY, width, height){
 	};
 
 	elementSet.hover(over, out);
-
-
 };
 
+$(document).ready(function(){
+	
 
+
+	
+});

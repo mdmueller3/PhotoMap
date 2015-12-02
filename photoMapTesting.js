@@ -1,0 +1,1 @@
+var map = photomap(0,0,1000,1000);

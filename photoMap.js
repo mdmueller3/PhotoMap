@@ -1,21 +1,24 @@
 var paper = Raphael(0,0,1000,1000);
 
+paper.setStart();
+
 for(var path in worldmap.shapes){
+
 	var state = paper.path(worldmap.shapes[path]);
 
-	state.attr("stroke-width",0.5);
+	state.attr("stroke-width",0.3);
 
-	paper.path(worldmap.shapes[path]).mouseover(function(){
-		this.attr("fill","#f00");
-	});
 
 };
 
+var elementSet = paper.setFinish();
 
-// paper.forEach(function(country){
-// 	country.mouseover(function(){
-// 		country.attr("fill","#f00");
-// 		alert("DFSA");
-// 	});
-// });
+var over = function(){
+	this.stop().animate({fill: "#ddffff"},100);
+};
 
+var out = function(){
+	this.stop().animate({fill: "white"},100);
+};
+
+elementSet.hover(over, out);

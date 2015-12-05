@@ -57,19 +57,21 @@ function pullImages(state, id){
 	}
 
 	if(!contains){
-		var img = new Image();
-		img.id = id;
-		images.push(img);
+		// var img = new Image();
+		// img.id = id;
+		// images.push(img);
 
-		var width = state.getBBox(false).width;
-		var height = state.getBBox(false).height;
+		// var width = state.getBBox(false).width;
+		// var height = state.getBBox(false).height;
 
-		var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
-		var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
+		// var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
+		// var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
 
-		img.position = "absolute";
-		img.width = width;
-		img.height = height;
+		// img.position = "absolute";
+		// img.width = width;
+		// img.height = height;
+
+		state.attr('fill','url(images/hi/0.jpg)');
 
 
 		// NOT WORKING

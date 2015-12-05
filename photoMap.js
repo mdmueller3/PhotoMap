@@ -1,4 +1,6 @@
 var listOfStates = [];
+var images = [];
+//eventually combine these
 
 function photomap(posX, posY, width, height, scale){
 	var paper = Raphael(posX,posY,width,height);
@@ -7,7 +9,8 @@ function photomap(posX, posY, width, height, scale){
 	for(var path in usMap){
 
 		var state = paper.path(usMap[path]);
-		state.attr("stroke-width",0.5);
+		state.attr("stroke-width",2);
+		state.attr("stroke", "gray");
 		state.attr("fill","white");
 	
 		listOfStates.push(path);
@@ -27,6 +30,7 @@ function photomap(posX, posY, width, height, scale){
 
 	var out = function(){
 		this.stop().animate({fill: "white"},100);
+		hideImages(this, listOfStates[this.id]);
 	};
 
 	elementSet.hover(over, out);
@@ -44,40 +48,58 @@ function pathExists(path){
 function pullImages(state, id){
 	// alert(id); // returns the initials of the state (the path)
 	var path = 'images/'.concat(id).concat('/0.jpg');
-	// if(pathExists(path)){
-	// 	alert("420 blaze it");
-	// 	var img = new Image();
-	// 	var div = document.getElementById('holder');
-	// 	img.onload = function(){
-	// 		div.appendChild(img);
-	// 	}
-	// 	img.src = path;
-	// }
-	// else{
-	// 	state.stop().animate({fill: "#eeffff"},0); // animate
-	// }
 
-	var img = new Image();
-	var div = document.getElementById('holder');
-	img.onload = function(){
-		div.appendChild(img);	
+	var contains = false;
+	for(var i = 0; i < images.length; i++){
+		if(image[i].id == id){
+			contains = true;
+		}
 	}
-	img.onerror = function(){
-		state.stop().animate({fill: "#eeffff"},0);
+
+	if(!contains){
+		var img = new Image();
+		img.id = id;
+		images.push(img);
+
+		var width = state.getBBox(false).width;
+		var height = state.getBBox(false).height;
+
+		var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
+		var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
+
+		img.position = "absolute";
+		img.width = width;
+		img.height = height;
+
+
+		// NOT WORKING
+		// img.style.left = centerX;
+		// img.style.top = centerY;
+
+		var div = document.getElementById('holder');
+		img.onload = function(){
+			div.appendChild(img);	
+		}
+		img.onerror = function(){
+			state.stop().animate({fill: "#eeffff"},0);
+		}
+		img.src = path;
 	}
-	img.src = path;
+
 
 }
 
-$(document).ready(function(){
-	// function pullImages(state, id){
-	// 	state.stop().animate({fill: "#eeffff"},0);
-	// };
-	$.fn.pullImages = function(state,id){
-		state.stop().animate({fill: "#eeffff"},0);
-	};
-});
 
-//Right now: trying to convert all of this stuff to jQuery SO I can 
-//use AJAX to make an image appear and disappear (and also check to
-//see if the path is valid)
+function hideImages(state, id){
+	for(var i = 0; i < images.length; i++){
+		if(images[i].id == id){
+			var image = images[i];
+			images.splice(i, 1);
+
+			var div = document.getElementById('holder');
+			div.removeChild(image);
+
+		}
+	}
+
+}

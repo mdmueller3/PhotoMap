@@ -71,7 +71,7 @@ function pullImages(state, id){
 		// img.width = width;
 		// img.height = height;
 
-		state.attr('fill','url(images/hi/0.jpg)');
+		state.attr('fillfit','url(images/hi/0.jpg)');
 
 
 		// NOT WORKING

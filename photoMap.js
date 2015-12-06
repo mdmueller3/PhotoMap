@@ -19,74 +19,78 @@ function photomap(posX, posY, width, height, scale){
 
 		state.transform(tfm);
 
+		pullImages(state, listOfStates[state.id]);
+
 
 	};
 	var elementSet = paper.setFinish();
 
-	var over = function(){
-		// this.stop().animate({fill: "#eeffff"},0);
-		pullImages(this, listOfStates[this.id]);
-	};
 
-	var out = function(){
-		this.stop().animate({fill: "white"},100);
-		hideImages(this, listOfStates[this.id]);
-	};
+	// var over = function(){
+	// 	pullImages(this, listOfStates[this.id]);
+	// };
 
-	elementSet.hover(over, out);
+	// var out = function(){
+	// 	this.stop().animate({fill: "white"},100);
+	// 	hideImages(this, listOfStates[this.id]);
+	// };
+
+	// elementSet.hover(over, out);
 };
 
-function pathExists(path){
+function pathExists(path, callback){
 	var img = new Image();
-	// img.onload = function(){return true;};
-	img.onerror = function(){return false;};
-	
+	// img.onerror = function(){alert("error"); return false;};
+
+	img.onload = function(){callback(true);};
+	img.onerror = function(){callback(false);};
+
 	img.src = path;
-	return true;
+
 }
 
 function pullImages(state, id){
 	// alert(id); // returns the initials of the state (the path)
 	var path = 'images/'.concat(id).concat('/0.jpg');
 
-	var contains = false;
-	for(var i = 0; i < images.length; i++){
-		if(image[i].id == id){
-			contains = true;
+	var exists = false;
+
+	pathExists(path, function(result){
+		if(result){
+			var url = 'url('.concat(path).concat(')');
+			state.attr('fillfit',url);
+		}
+	});
+
+
+	if(exists == true){
+		// for(var i = 0; i < images.length; i++){
+		// 	if(image[i].id == id){
+		// 		contains = true;
+		// 	}
+		// }
+		if(!contains){
+			// var img = new Image();
+			// img.id = id;
+			// images.push(img);
+
+			// var width = state.getBBox(false).width;
+			// var height = state.getBBox(false).height;
+
+			// var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
+			// var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
+
+			// img.position = "absolute";
+			// img.width = width;
+			// img.height = height;
+
+
+			
 		}
 	}
-
-	if(!contains){
-		// var img = new Image();
-		// img.id = id;
-		// images.push(img);
-
-		// var width = state.getBBox(false).width;
-		// var height = state.getBBox(false).height;
-
-		// var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
-		// var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
-
-		// img.position = "absolute";
-		// img.width = width;
-		// img.height = height;
-
-		state.attr('fillfit','url(images/hi/0.jpg)');
-
-
-		// NOT WORKING
-		// img.style.left = centerX;
-		// img.style.top = centerY;
-
-		var div = document.getElementById('holder');
-		img.onload = function(){
-			div.appendChild(img);	
-		}
-		img.onerror = function(){
-			state.stop().animate({fill: "#eeffff"},0);
-		}
-		img.src = path;
-	}
+	else{
+		// alert("doesn't exist");
+	};
 
 
 }

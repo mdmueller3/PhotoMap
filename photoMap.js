@@ -1,6 +1,7 @@
 var listOfStates = [];
 var images = [];
 //eventually combine these
+var hoverEffect = false;
 
 function photomap(posX, posY, width, height, scale){
 	var paper = Raphael(posX,posY,width,height);
@@ -26,16 +27,21 @@ function photomap(posX, posY, width, height, scale){
 	var elementSet = paper.setFinish();
 
 
-	// var over = function(){
-	// 	pullImages(this, listOfStates[this.id]);
-	// };
 
-	// var out = function(){
-	// 	this.stop().animate({fill: "white"},100);
-	// 	hideImages(this, listOfStates[this.id]);
-	// };
+	this.setHoverEffect = function(hoverColor, exitColor, transitionTime){
 
-	// elementSet.hover(over, out);
+		var over = function(){
+			this.stop().animate({fill: hoverColor.toString()}, transitionTime);
+		};
+
+		var out = function(){
+			this.stop().animate({fill: exitColor.toString()}, transitionTime);
+		};
+		elementSet.hover(over, out);
+	}
+
+	return this;
+
 };
 
 function pathExists(path, callback){
@@ -53,45 +59,12 @@ function pullImages(state, id){
 	// alert(id); // returns the initials of the state (the path)
 	var path = 'images/'.concat(id).concat('/0.jpg');
 
-	var exists = false;
-
-	pathExists(path, function(result){
-		if(result){
+	pathExists(path, function(exists){
+		if(exists){
 			var url = 'url('.concat(path).concat(')');
 			state.attr('fillfit',url);
 		}
 	});
-
-
-	if(exists == true){
-		// for(var i = 0; i < images.length; i++){
-		// 	if(image[i].id == id){
-		// 		contains = true;
-		// 	}
-		// }
-		if(!contains){
-			// var img = new Image();
-			// img.id = id;
-			// images.push(img);
-
-			// var width = state.getBBox(false).width;
-			// var height = state.getBBox(false).height;
-
-			// var centerX = state.getBBox(false).x2 - state.getBBox(false).x + (width/2);
-			// var centerY = state.getBBox(false).y2 - state.getBBox(false).y + (height/2);
-
-			// img.position = "absolute";
-			// img.width = width;
-			// img.height = height;
-
-
-			
-		}
-	}
-	else{
-		// alert("doesn't exist");
-	};
-
 
 }
 

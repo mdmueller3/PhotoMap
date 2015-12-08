@@ -7,13 +7,22 @@ var hoverColor;
 var exitColor;
 var transition;
 
-function photomap(posX, posY, width, height, scale){
+var strokeWidth = 2;
+
+var flip = true;
+var flipSpeed = 800;
+
+var stateHovered;
+var stateHoveredId;
+var pathNum = 0;
+
+function photomap(posX, posY, width, height, scale, mapName){
 	var paper = Raphael(posX,posY,width,height);
 
 	paper.setStart();
-	for(var path in usMap){
+	for(var path in mapName){
 
-		var state = paper.path(usMap[path]);
+		var state = paper.path(mapName[path]);
 		state.attr("stroke-width",2);
 		state.attr("stroke", "gray");
 		state.attr("fill","white");
@@ -48,6 +57,15 @@ function photomap(posX, posY, width, height, scale){
 		paper.setSize(paper.width, height);
 	};
 
+	this.setStrokeWidth = function(width){
+		strokeWidth = width;
+	}
+
+	this.setFlipSpeed = function(speed){
+		flipSpeed = speed;
+	}
+
+	ready = true;
 	return this;
 };
 
@@ -62,7 +80,12 @@ function pathExists(path, callback){
 	img.onerror = function(){callback(false);};
 
 	img.src = path;
+}
 
+function backToOriginal(state, id){
+	var path = 'images/'.concat(id).concat('/0.jpg');
+	var url = 'url('.concat(path).concat(')');
+	state.attr('fillfit',url);
 }
 
 function pullImages(state, id){
@@ -77,6 +100,22 @@ function pullImages(state, id){
 			// if path exists, use url to fill state
 			var url = 'url('.concat(path).concat(')');
 			state.attr('fillfit',url);
+
+			if(flip){
+				var hoverTransition = function(){
+					stateHovered = state;
+					stateHoveredId = id;
+					var newStrokeWidth = state.attr("stroke-width") + 2;
+					state.attr("stroke-width", newStrokeWidth);
+				};
+				var exitTransition = function(){
+					backToOriginal(stateHovered, stateHoveredId);
+					state.attr("stroke-width", strokeWidth);
+					stateHovered = null;
+					stateHoveredId = null;
+				};
+				state.hover(hoverTransition,exitTransition);
+			}
 		}
 		// If path doesn't exist, but hoverEffect is true, add hover effect
 		else if(hoverEffect == true){
@@ -93,7 +132,6 @@ function pullImages(state, id){
 			state.hover(over, out);
 		};
 	});
-
 }
 
 
@@ -110,3 +148,36 @@ function hideImages(state, id){
 	}
 
 }
+
+
+setInterval(function(){
+	//called every 500 milliseconds
+	if(stateHovered != null){
+		var path = 'images/'.concat(stateHoveredId).concat('/').concat(pathNum).concat('.jpg');
+		this.pathNum++;
+
+		var img = new Image();
+		img.onload = function(){
+			nextImage();
+		}
+		img.onerror = function(){
+			original();
+		}
+		img.src = path;
+
+		function nextImage(){
+			var url = 'url('.concat(path).concat(')');
+			stateHovered.attr('fillfit',url);
+
+		}
+
+		function original(){
+			this.pathNum = 0;
+			path = 'images/'.concat(stateHoveredId).concat('/').concat(pathNum).concat('.jpg');
+			var url = 'url('.concat(path).concat(')');
+			stateHovered.attr('fillfit',url);
+		}
+
+	};
+
+}, flipSpeed);

@@ -14,4 +14,4 @@ There are 3 important things to include in your HTML file in order to use PhotoM
 
 Show the world where you've been and where you're going
 
-** This repository is still a work in progress **
+**This repository is still a work in progress**

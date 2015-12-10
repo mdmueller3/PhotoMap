@@ -1,5 +1,5 @@
 var listOfStates = [];
-var statesWithImages = [];
+var statesWithImages = []; //not used
 //eventually combine these
 
 var hoverEffect = false;
@@ -15,6 +15,8 @@ var flipSpeed = 800;
 var stateHovered;
 var stateHoveredId;
 var pathNum = 0;
+
+var slideNum = 0;
 
 function photomap(posX, posY, width, height, scale, mapName){
 	var paper = Raphael(posX,posY,width,height);
@@ -66,6 +68,7 @@ function photomap(posX, posY, width, height, scale, mapName){
 	}
 
 	ready = true;
+
 	return this;
 };
 
@@ -115,7 +118,34 @@ function pullImages(state, id){
 					stateHoveredId = null;
 				};
 				state.hover(hoverTransition,exitTransition);
+
 			}
+
+			var clicked = function(){
+				//Open slideshow
+				var slideshowBackground = document.getElementById('slideshowBackground');
+				slideshowBackground.style.backgroundColor = 'black';
+				slideshowBackground.style.zIndex = 0;
+
+				var slideshowHolder = document.getElementById('slideshow');
+				slideshowHolder.style.zIndex = 1;
+				var img = new Image();
+				img.src = 'images/hi/0.jpg';
+				slideshowHolder.appendChild(img);
+				
+				if(img.height > img.width){
+					img.className = "slideImageHeight";
+				}
+				else{
+					img.className = "slideImageWidth";
+				}
+
+				var x = new Image();
+				x.src = "logos/x.png";
+				x.id = "x";
+				slideshowHolder.appendChild(x);
+			}
+			state.click(clicked);
 		}
 		// If path doesn't exist, but hoverEffect is true, add hover effect
 		else if(hoverEffect == true){
@@ -132,8 +162,8 @@ function pullImages(state, id){
 			state.hover(over, out);
 		};
 	});
-}
 
+}
 
 function hideImages(state, id){
 	for(var i = 0; i < statesWithImages.length; i++){
@@ -181,3 +211,5 @@ setInterval(function(){
 	};
 
 }, flipSpeed);
+
+

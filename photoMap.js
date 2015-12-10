@@ -18,8 +18,14 @@ var pathNum = 0;
 
 var slideNum = 0;
 
+var mapWidth;
+var mapHeight;
+
 function photomap(posX, posY, width, height, scale, mapName){
 	var paper = Raphael(posX,posY,width,height);
+
+	mapWidth = width;
+	mapHeight = height;
 
 	paper.setStart();
 	for(var path in mapName){
@@ -126,6 +132,7 @@ function pullImages(state, id){
 				var slideshowBackground = document.getElementById('slideshowBackground');
 				slideshowBackground.style.backgroundColor = 'black';
 				slideshowBackground.style.zIndex = 0;
+				// slideshowBackground.style.width = mapWidth+100;
 
 				var slideshowHolder = document.getElementById('slideshow');
 				slideshowHolder.style.zIndex = 1;
@@ -133,17 +140,25 @@ function pullImages(state, id){
 				img.src = 'images/hi/0.jpg';
 				slideshowHolder.appendChild(img);
 				
-				if(img.height > img.width){
-					img.className = "slideImageHeight";
-				}
-				else{
-					img.className = "slideImageWidth";
-				}
+				img.className = "slideExperiment";
 
+				// if(img.height > img.width){
+				// 	img.className = "slideImageHeight";
+				// }
+				// else{
+				// 	img.className = "slideImageWidth";
+				// }
+
+				var xHolder = document.getElementById('xHolder');
 				var x = new Image();
 				x.src = "logos/x.png";
 				x.id = "x";
-				slideshowHolder.appendChild(x);
+				x.onclick = function(){
+					//hide slideshow
+					slideshowBackground.style.opacity = 0;
+					alert("AFDS");
+				}
+				xHolder.appendChild(x);
 			}
 			state.click(clicked);
 		}
@@ -213,3 +228,8 @@ setInterval(function(){
 }, flipSpeed);
 
 
+$(document).ready(function(){
+
+
+
+});

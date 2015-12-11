@@ -11,6 +11,7 @@ html{
 	bottom:0px;
 	top:0px;
 	left:0px;
+	margin:0;
 /*	right:0px;*/
 	width:100%;
 	position:absolute;
@@ -31,8 +32,7 @@ html{
 
 .slideExperiment{
 	top:100px;
-	/*left:40px;*/
-	right:30;
+	/*right:0;*/
 	max-height: 700;
 	max-width: 100%;
 	width:auto;
@@ -50,4 +50,22 @@ html{
 	top:15px;
 	left:15px;
 	z-index: 4;
+}
+
+#leftArrow{
+	height:30px;
+	width:30px;
+	position: absolute;
+	z-index: 4;
+	left:15px;
+	top:300px;
+}
+
+#rightArrow{
+	height:30px;
+	width:30px;
+	position: absolute;
+	z-index: 4;
+	right:15px;
+	top:300px;
 }

@@ -136,18 +136,56 @@ function pullImages(state, id){
 
 				var slideshowHolder = document.getElementById('slideshow');
 				slideshowHolder.style.zIndex = 1;
-				var img = new Image();
-				img.src = 'images/hi/0.jpg';
-				slideshowHolder.appendChild(img);
-				
-				img.className = "slideExperiment";
 
-				// if(img.height > img.width){
-				// 	img.className = "slideImageHeight";
-				// }
-				// else{
-				// 	img.className = "slideImageWidth";
-				// }
+				// var img = new Image();
+				// img.src = 'images/hi/0.jpg';
+				// slideshowHolder.appendChild(img);
+				
+				// img.className = "slideExperiment";
+
+
+
+
+				// WIDTH RETURNING 0
+				// Because checking width before image is finished loading.. I dunno how to fix yet
+
+				var imageArray = new Array();
+				var keepGoing = true;
+				var count = 2;
+				var images = [];
+				while(keepGoing){
+
+					var path = 'images/'.concat(id).concat('/').concat(count).concat('.jpg');
+				
+					imageArray[count] = new Image();
+					imageArray[count].src = path;
+
+					alert(imageArray[count].height);
+
+					if(imageArray[count].width > 0){
+
+						images.push(imageArray[count]);
+						alert(imageArray[count].width);
+						// alert("image added");
+						count++;
+					}
+					else{
+						keepGoing = false;
+					}
+				}
+				alert("loop ended");
+
+				// STUCK HERE
+
+
+				var imageNum = 0; //The image you're on
+
+				var slideImage = new Image();
+				slideImage = images[imageNum];
+				slideImage.className = "slideExperiment";
+				slideshowHolder.appendChild(slideImage);
+
+
 
 				var xHolder = document.getElementById('xHolder');
 				var x = new Image();
@@ -155,10 +193,32 @@ function pullImages(state, id){
 				x.id = "x";
 				x.onclick = function(){
 					//hide slideshow
-					slideshowBackground.style.opacity = 0;
-					alert("AFDS");
+					alert("exit slideshow");
 				}
 				xHolder.appendChild(x);
+
+				var rightArrowHolder = document.getElementById('right');
+				var rightArrow = new Image();
+				rightArrow.src = "logos/right.png";
+				rightArrow.id = "rightArrow";
+				rightArrow.onclick = function(){
+					count++;
+					if(count > images.length){
+						count = 0;
+					}
+					slideshowHolder.removeChild(slideImage);
+					slideImage = images[count];
+					slideshowHolder.appendChild(slideImage);
+
+				}
+				rightArrowHolder.appendChild(rightArrow);
+
+				var leftArrowHolder = document.getElementById('left');
+				var leftArrow = new Image();
+				leftArrow.src = "logos/left.png";
+				leftArrow.id = "leftArrow";
+				leftArrowHolder.appendChild(leftArrow);
+
 			}
 			state.click(clicked);
 		}

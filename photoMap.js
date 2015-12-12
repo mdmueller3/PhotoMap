@@ -37,7 +37,7 @@ function photomap(posX, posY, width, height, scale, mapName){
 
 		var state = paper.path(mapName[path]);
 		state.attr("stroke-width",2);
-		state.attr("stroke", "gray");
+		state.attr("stroke", "black");
 		state.attr("fill","white");
 	
 		ids.push(path); // ID ('hi')
@@ -123,6 +123,43 @@ function backToOriginal(state, id){
 	state.attr('fillfit',url);
 }
 
+//DISABLING AND ENABLING SCROLLING
+
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+// - - - 
+
 function pullImages(state, id){
 	// alert(id); // returns the initials of the state (the path)
 	var path = 'images/'.concat(id).concat('/0.jpg');
@@ -153,7 +190,12 @@ function pullImages(state, id){
 
 			}
 
+
+
+
 			var clicked = function(){
+				disableScroll();
+
 				//Open slideshow
 				var slideshowBackground = document.getElementById('slideshowBackground');
 				slideshowBackground.style.backgroundColor = 'black';
@@ -167,7 +209,7 @@ function pullImages(state, id){
 				// img.src = 'images/hi/0.jpg';
 				// slideshowHolder.appendChild(img);
 				
-				// img.className = "slideExperiment";
+				// img.className = "slideImage";
 
 
 
@@ -204,13 +246,15 @@ function pullImages(state, id){
 				// STUCK HERE
 
 
+
+
 				var imageNum = 0; //The image you're on
 
 				var path = 'images/'.concat(id).concat('/').concat(imageNum).concat('.jpg');
 
 				var img = new Image();
 				img.src = path;
-				img.className = "slideExperiment";
+				img.className = "slideImage";
 
 				slideshowHolder.appendChild(img);
 
@@ -281,6 +325,7 @@ function pullImages(state, id){
 					xHolder.removeChild(x);
 					leftArrowHolder.removeChild(leftArrow);
 					rightArrowHolder.removeChild(rightArrow);
+					enableScroll();
 				}
 				xHolder.appendChild(x);
 
@@ -323,8 +368,10 @@ function hideImages(state, id){
 setInterval(function(){
 	//called every 500 milliseconds
 	if(stateHovered != null){
-		var path = 'images/'.concat(stateHoveredId).concat('/').concat(pathNum).concat('.jpg');
+
 		this.pathNum++;
+		var path = 'images/'.concat(stateHoveredId).concat('/').concat(pathNum).concat('.jpg');
+
 
 		var img = new Image();
 		img.onload = function(){

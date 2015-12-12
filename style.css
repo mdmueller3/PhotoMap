@@ -30,7 +30,7 @@ html{
 }
 
 
-.slideExperiment{
+.slideImage{
 	top:100px;
 	/*right:0;*/
 	max-height: 700;
@@ -57,8 +57,8 @@ html{
 	width:30px;
 	position: absolute;
 	z-index: 4;
-	left:15px;
-	top:300px;
+	left:200px;
+	top:40px;
 }
 
 #rightArrow{
@@ -66,6 +66,6 @@ html{
 	width:30px;
 	position: absolute;
 	z-index: 4;
-	right:15px;
-	top:300px;
+	right:200px;
+	top:40px;
 }

@@ -1,6 +1,9 @@
-var listOfStates = [];
-var statesWithImages = []; //not used
-//eventually combine these
+var states = []; // Raphael objects
+var ids = []; // IDs ('hi')
+var numImages = new Array(); // Hopefully lines up with the above
+
+
+
 
 var hoverEffect = false;
 var hoverColor;
@@ -28,6 +31,8 @@ function photomap(posX, posY, width, height, scale, mapName){
 	mapHeight = height;
 
 	paper.setStart();
+
+	var index = 0;
 	for(var path in mapName){
 
 		var state = paper.path(mapName[path]);
@@ -35,13 +40,17 @@ function photomap(posX, posY, width, height, scale, mapName){
 		state.attr("stroke", "gray");
 		state.attr("fill","white");
 	
-		listOfStates.push(path);
+		ids.push(path); // ID ('hi')
+		states.push(state); // Raphael object
 
 		var tfm = 'S'.concat(scale).concat(',').concat(scale).concat(',0,0');
 
+
 		state.transform(tfm);
 
-		pullImages(state, listOfStates[state.id]);
+		numImages[index] = 0;
+		countImages(path, index);
+		pullImages(state, ids[state.id]);
 
 	};
 	var elementSet = paper.setFinish();
@@ -77,6 +86,23 @@ function photomap(posX, posY, width, height, scale, mapName){
 
 	return this;
 };
+
+function countImages(id, index){
+
+	var keepGoing = true;
+
+	var pathNum = 0;
+	while(keepGoing){
+		var img = new Image();
+		var path = 'images/'.concat(id).concat('/').concat(pathNum).concat('.jpg');
+
+		img.src = path;
+
+
+		keepGoing = false;
+	}
+	// alert(id + " : " + numImages[index]);
+}
 
 function pathExists(path, callback){
 	var img = new Image();
@@ -149,75 +175,114 @@ function pullImages(state, id){
 				// WIDTH RETURNING 0
 				// Because checking width before image is finished loading.. I dunno how to fix yet
 
-				var imageArray = new Array();
-				var keepGoing = true;
-				var count = 2;
-				var images = [];
-				while(keepGoing){
+				// var imageArray = new Array();
+				// var keepGoing = true;
+				// var count = 0;
+				// var images = [];
+				// while(keepGoing){
 
-					var path = 'images/'.concat(id).concat('/').concat(count).concat('.jpg');
+				// 	var path = 'images/'.concat(id).concat('/').concat(count).concat('.jpg');
 				
-					imageArray[count] = new Image();
-					imageArray[count].src = path;
+				// 	imageArray[count] = new Image();
+				// 	imageArray[count].src = path;
 
-					alert(imageArray[count].height);
+				// 	alert(imageArray[count].height);
 
-					if(imageArray[count].width > 0){
+				// 	if(imageArray[count].width > 0){
 
-						images.push(imageArray[count]);
-						alert(imageArray[count].width);
-						// alert("image added");
-						count++;
-					}
-					else{
-						keepGoing = false;
-					}
-				}
-				alert("loop ended");
+				// 		images.push(imageArray[count]);
+				// 		alert(imageArray[count].width);
+				// 		// alert("image added");
+				// 		count++;
+				// 	}
+				// 	else{
+				// 		keepGoing = false;
+				// 	}
+				// }
+				// alert("loop ended");
 
 				// STUCK HERE
 
 
 				var imageNum = 0; //The image you're on
 
-				var slideImage = new Image();
-				slideImage = images[imageNum];
-				slideImage.className = "slideExperiment";
-				slideshowHolder.appendChild(slideImage);
+				var path = 'images/'.concat(id).concat('/').concat(imageNum).concat('.jpg');
+
+				var img = new Image();
+				img.src = path;
+				img.className = "slideExperiment";
+
+				slideshowHolder.appendChild(img);
 
 
 
+
+				// RIGHT ARROW STUFF
+				var rightArrowHolder = document.getElementById('right');
+				var rightArrow = new Image();
+				rightArrow.src = "logos/right.png";
+				rightArrow.id = "rightArrow";
+
+
+				var rightClicked = function(){
+					imageNum++;
+					path = 'images/'.concat(id).concat('/').concat(imageNum).concat('.jpg');
+
+					var error = function(){
+						imageNum = imageNum - 2;
+						rightClicked();
+					}
+
+					img.onerror = function(){error();};
+					img.src = path;
+					
+				}
+
+				rightArrow.onclick = function(){
+					rightClicked();
+				}
+				rightArrowHolder.appendChild(rightArrow);
+
+
+				// LEFT ARROW STUFF
+				var leftArrowHolder = document.getElementById('left');
+				var leftArrow = new Image();
+				leftArrow.src = "logos/left.png";
+				leftArrow.id = "leftArrow";
+
+				var leftClicked = function(){
+					imageNum--;
+					path = 'images/'.concat(id).concat('/').concat(imageNum).concat('.jpg');
+
+					var error = function(){
+						imageNum = imageNum + 2;
+						leftClicked();
+					}
+
+					img.onerror = function(){error();};
+					img.src = path;
+				}
+
+				leftArrow.onclick = function(){
+					leftClicked();
+				}
+				leftArrowHolder.appendChild(leftArrow);
+
+				// X STUFF
 				var xHolder = document.getElementById('xHolder');
 				var x = new Image();
 				x.src = "logos/x.png";
 				x.id = "x";
 				x.onclick = function(){
-					//hide slideshow
-					alert("exit slideshow");
+					imageNum = 0;
+					slideshowHolder.removeChild(img);
+					slideshowBackground.style.backgroundColor = 'transparent';
+					slideshowBackground.style.zIndex = -1;
+					xHolder.removeChild(x);
+					leftArrowHolder.removeChild(leftArrow);
+					rightArrowHolder.removeChild(rightArrow);
 				}
 				xHolder.appendChild(x);
-
-				var rightArrowHolder = document.getElementById('right');
-				var rightArrow = new Image();
-				rightArrow.src = "logos/right.png";
-				rightArrow.id = "rightArrow";
-				rightArrow.onclick = function(){
-					count++;
-					if(count > images.length){
-						count = 0;
-					}
-					slideshowHolder.removeChild(slideImage);
-					slideImage = images[count];
-					slideshowHolder.appendChild(slideImage);
-
-				}
-				rightArrowHolder.appendChild(rightArrow);
-
-				var leftArrowHolder = document.getElementById('left');
-				var leftArrow = new Image();
-				leftArrow.src = "logos/left.png";
-				leftArrow.id = "leftArrow";
-				leftArrowHolder.appendChild(leftArrow);
 
 			}
 			state.click(clicked);
@@ -288,8 +353,4 @@ setInterval(function(){
 }, flipSpeed);
 
 
-$(document).ready(function(){
 
-
-
-});

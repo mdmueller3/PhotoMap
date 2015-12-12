@@ -1,0 +1,71 @@
+html{
+	pointer-events: all;
+}
+
+#holder{
+	height:100px;
+	width: 100px;
+}
+
+#slideshowBackground{
+	bottom:0px;
+	top:0px;
+	left:0px;
+	margin:0;
+/*	right:0px;*/
+	width:100%;
+	position:absolute;
+	/*opacity:0.8;*/
+	z-index: -1;
+}
+
+#slideshowHolder{
+	height:100%;
+	width:100%;
+	top:0px;
+	left:0px;
+	position:absolute;
+	/*opacity:0.8;*/
+	z-index: -1;
+}
+
+
+.slideImage{
+	top:100px;
+	/*right:0;*/
+	max-height: 700;
+	max-width: 100%;
+	width:auto;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	z-index: 2;
+	position: relative;
+}
+
+#x{
+	height:15px;
+	width:15px;
+	position:absolute;
+	top:15px;
+	left:15px;
+	z-index: 4;
+}
+
+#leftArrow{
+	height:30px;
+	width:30px;
+	position: absolute;
+	z-index: 4;
+	left:200px;
+	top:40px;
+}
+
+#rightArrow{
+	height:30px;
+	width:30px;
+	position: absolute;
+	z-index: 4;
+	right:200px;
+	top:40px;
+}

@@ -1,5 +1,5 @@
 # PhotoMap
-### Create a map to show your travels. Shows where you've been or where you want to go.
+### A map to visualize your travels. Show the world where you've been.
 
 ![A map of the US](screenshots/map.png)
 

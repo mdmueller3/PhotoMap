@@ -1,5 +1,7 @@
 # PhotoMap
-Create a map to show your travels. Shows where you've been or where you want to go. Alternatively, creates a cool map with awesome hover features
+### Create a map to show your travels. Shows where you've been or where you want to go.
+
+![A map of the US](screenshots/map.png)
 
 # Downloading
 There are 4 important things to include in your HTML file in order to use PhotoMap
@@ -18,6 +20,11 @@ var map = photomap(100,200,1000,500,1,usMap);
 //photomap(posX,posY,width,height,scale,variable)
 ```
 The above code creates a map with width = 1000 and height = 500 at position (100, 200).
+
+# Slideshow
+When elements with images are clicked on, a simple slideshow interface will pop up to allow you to show the images on a bigger screen. An example is shown below
+
+![A slideshow sample from Alaska](screenshots/slideshow.png)
 
 # Improvements to come:
 - Better web support

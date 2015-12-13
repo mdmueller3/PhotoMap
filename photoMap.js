@@ -21,6 +21,9 @@ var pathNum = 0;
 
 var slideNum = 0;
 
+var lineColor = "black";
+var fillColor = "white";
+
 var mapWidth;
 var mapHeight;
 
@@ -37,7 +40,7 @@ function photomap(posX, posY, width, height, scale, mapName){
 
 		var state = paper.path(mapName[path]);
 		state.attr("stroke-width",2);
-		state.attr("stroke", "black");
+		state.attr("stroke", lineColor);
 		state.attr("fill","white");
 	
 		ids.push(path); // ID ('hi')
@@ -55,10 +58,10 @@ function photomap(posX, posY, width, height, scale, mapName){
 	};
 	var elementSet = paper.setFinish();
 
-	this.setHoverEffect = function(hover, exit, transition){
+	this.setHoverEffect = function(hover, transition){
 		hoverEffect = true;
 		hoverColor = hover;
-		exitColor = exit;
+		exitColor = fillColor;
 		transitionTime = transition;
 	};
 
@@ -76,10 +79,28 @@ function photomap(posX, posY, width, height, scale, mapName){
 
 	this.setStrokeWidth = function(width){
 		strokeWidth = width;
+		elementSet.forEach(function(state){
+			state.attr({"stroke-width": width});
+		});
 	}
 
 	this.setFlipSpeed = function(speed){
 		flipSpeed = speed;
+	}
+
+	this.setLineColor = function(color){
+		lineColor = color;
+		elementSet.forEach(function(state){
+			state.attr({"stroke": color});
+		});
+	}
+
+	this.setFillColor = function(color){
+		fillColor = color;
+		elementSet.forEach(function(state){
+			state.attr({fill: color});
+		});
+		setHoverEffect(hoverColor, transitionTime);
 	}
 
 	ready = true;

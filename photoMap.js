@@ -24,15 +24,19 @@ var slideNum = 0;
 var lineColor = "black";
 var fillColor = "white";
 
-var mapWidth;
-var mapHeight;
-
 function photomap(posX, posY, width, height, scale, mapName){
-	var paper = Raphael(posX,posY,width,height);
 
-	mapWidth = width;
-	mapHeight = height;
+	var paper;
+	if(typeof(posX) === 'string'){
+		paper = Raphael(posX, posY, width);
+		mapName = scale;
+		scale = height;
 
+	}
+	else{
+		paper = Raphael(posX,posY,width,height);
+	}
+	
 	paper.setStart();
 
 	var index = 0;
@@ -221,52 +225,9 @@ function pullImages(state, id){
 				var slideshowBackground = document.getElementById('slideshowBackground');
 				slideshowBackground.style.backgroundColor = 'black';
 				slideshowBackground.style.zIndex = 0;
-				// slideshowBackground.style.width = mapWidth+100;
 
 				var slideshowHolder = document.getElementById('slideshow');
 				slideshowHolder.style.zIndex = 1;
-
-				// var img = new Image();
-				// img.src = 'images/hi/0.jpg';
-				// slideshowHolder.appendChild(img);
-				
-				// img.className = "slideImage";
-
-
-
-
-				// WIDTH RETURNING 0
-				// Because checking width before image is finished loading.. I dunno how to fix yet
-
-				// var imageArray = new Array();
-				// var keepGoing = true;
-				// var count = 0;
-				// var images = [];
-				// while(keepGoing){
-
-				// 	var path = 'images/'.concat(id).concat('/').concat(count).concat('.jpg');
-				
-				// 	imageArray[count] = new Image();
-				// 	imageArray[count].src = path;
-
-				// 	alert(imageArray[count].height);
-
-				// 	if(imageArray[count].width > 0){
-
-				// 		images.push(imageArray[count]);
-				// 		alert(imageArray[count].width);
-				// 		// alert("image added");
-				// 		count++;
-				// 	}
-				// 	else{
-				// 		keepGoing = false;
-				// 	}
-				// }
-				// alert("loop ended");
-
-				// STUCK HERE
-
-
 
 
 				var imageNum = 0; //The image you're on

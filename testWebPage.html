@@ -10,8 +10,8 @@
 	<script src = "modifiedRaphael.js"></script>
 	
 	<!-- SVG files -->
-	<script src = "world.js"></script>
-	<script src = "usMap.js"></script>
+	<script src = "SVGs/world.js"></script>
+	<script src = "SVGs/usMap.js"></script>
 
 	<!-- JS file -->
 	<script src = "photoMap.js"></script>
@@ -20,7 +20,11 @@
 </head>
 <body>
 
-	<script src = "photoMapTesting.js"></script>
+	<script>
+		var map = photomap(0,0,1000,600,1,usMap);
+		map.setLineColor("gray");
+		map.setHoverEffect("#eeffff", 50);
+	</script>
 
 	<div id = "slideshowBackground">
 	</div>

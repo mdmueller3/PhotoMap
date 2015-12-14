@@ -6,14 +6,14 @@ var numImages = new Array(); // Hopefully lines up with the above
 
 
 var hoverEffect = false;
-var hoverColor;
+var currHoverColor = "eeffff";
 var exitColor;
-var transition;
+var transitionTime;
 
-var strokeWidth = 2;
+var currStrokeWidth = 2;
 
 var flip = true;
-var flipSpeed = 800;
+var currFlipSpeed = 800;
 
 var stateHovered;
 var stateHoveredId;
@@ -21,20 +21,27 @@ var pathNum = 0;
 
 var slideNum = 0;
 
-var lineColor = "black";
-var fillColor = "white";
+var currLineColor = "black";
+var currFillColor = "white";
 
-var scale = 1;
+var currScale = 1;
+
+var paperWidth;
+var paperHeight;
 
 function photomap(posX, posY, width, height, mapName){
 
 	var paper;
 	if(typeof(posX) === 'string'){
 		paper = Raphael(posX, posY, width);
+		paperWidth = posY;
+		paperHeight = width;
 		mapName = height;
 	}
 	else{
 		paper = Raphael(posX,posY,width,height);
+		paperWidth = width;
+		paperHeight = height;
 	}
 	
 	paper.setStart();
@@ -44,7 +51,7 @@ function photomap(posX, posY, width, height, mapName){
 
 		var state = paper.path(mapName[path]);
 		state.attr("stroke-width",2);
-		state.attr("stroke", lineColor);
+		state.attr("stroke", currLineColor);
 		state.attr("fill","white");
 	
 		ids.push(path); // ID ('hi')
@@ -57,61 +64,116 @@ function photomap(posX, posY, width, height, mapName){
 	};
 	var elementSet = paper.setFinish();
 
-	this.setHoverEffect = function(hover, transition){
-		hoverEffect = true;
-		hoverColor = hover;
-		exitColor = fillColor;
-		transitionTime = transition;
+
+	// <--- Map methods --->
+
+	this.hoverEffect = function(hoverColor, transition){
+		if(hoverColor == undefined){
+			return currHoverColor;
+		}
+		else{
+			hoverEffect = true;
+			currHoverColor = hoverColor;
+			exitColor = currFillColor;
+			transitionTime = transition;
+		}
 	};
 
-	this.setScale = function(newScale){
-		scale = newScale;
-		var tfm = 'S'.concat(scale).concat(',').concat(scale).concat(',0,0');
+	this.scale = function(newScale){
+		if(newScale == undefined){
+			return currScale;
+		}
+		else{
+			currScale = newScale;
+			var tfm = 'S'.concat(currScale).concat(',').concat(currScale).concat(',0,0');
 
-
-		// for Each
-		elementSet.forEach(function(state){
-			state.transform(tfm);
-		});
+			// for Each
+			elementSet.forEach(function(state){
+				state.transform(tfm);
+			});
+		}
 	}
 
-	this.setSize = function(width, height){
-		paper.setSize(width, height);
+	this.paperSize = function(width, height){
+		if(width == undefined){
+			return paperWidth + 'x' + paperHeight;
+		}
+		else{
+			paperWidth = width;
+			paperHeight = height;
+			paper.setSize(width, height);
+		};
 	};
 
-	this.setWidth = function(width){
-		paper.setSize(width, paper.height);
+	this.width = function(width){
+		if(width == undefined){
+			return paperWidth;
+		}
+		else{
+			paperWidth = width;
+			paper.setSize(width, paperHeight);
+		}
 	};
 
-	this.setHeight = function(height){
-		paper.setSize(paper.width, height);
+	this.height = function(height){
+		if(height == undefined){
+			return paperHeight;
+		}
+		else{
+			paperHeight = height;
+			paper.setSize(paperWidth, height);
+		}
 	};
 
-	this.setStrokeWidth = function(width){
-		strokeWidth = width;
-		elementSet.forEach(function(state){
-			state.attr({"stroke-width": width});
-		});
+	this.strokeWidth = function(width){
+		if(width == undefined){
+			return currStrokeWidth;
+		}
+		else{
+			currStrokeWidth = width;
+			elementSet.forEach(function(state){
+				state.attr({"stroke-width": width});
+			});
+		}
 	}
 
-	this.setFlipSpeed = function(speed){
-		flipSpeed = speed;
+	this.flipSpeed = function(speed){
+		if(speed == undefined){
+			return currFlipSpeed;
+		}
+		else{
+			currFlipSpeed = speed;
+		}
 	}
 
-	this.setLineColor = function(color){
-		lineColor = color;
-		elementSet.forEach(function(state){
-			state.attr({"stroke": color});
-		});
+	this.lineColor = function(color){
+		if(color == undefined){
+			return currLineColor;
+		}
+		else{
+			currLineColor = color;
+			elementSet.forEach(function(state){
+				state.attr({"stroke": color});
+			});
+		}
 	}
 
-	this.setFillColor = function(color){
-		fillColor = color;
-		elementSet.forEach(function(state){
-			state.attr({fill: color});
-		});
-		setHoverEffect(hoverColor, transitionTime);
+	this.fillColor = function(color){
+		if(color == undefined){
+			return currFillColor;
+		}
+		else{
+			currFillColor = color;
+			elementSet.forEach(function(state){
+				state.attr({fill: color});
+			});
+			hoverEffect(currHoverColor, 1000);
+		}
 	}
+
+	// <--- End of map methods --->
+
+
 
 	ready = true;
 
@@ -213,7 +275,7 @@ function pullImages(state, id){
 				};
 				var exitTransition = function(){
 					backToOriginal(stateHovered, stateHoveredId);
-					state.attr("stroke-width", strokeWidth);
+					state.attr("stroke-width", currStrokeWidth);
 					stateHovered = null;
 					stateHoveredId = null;
 				};
@@ -324,7 +386,7 @@ function pullImages(state, id){
 		else if(hoverEffect == true){
 			// Hover effect
 			var over = function(){
-				state.stop().animate({fill: hoverColor}, transitionTime);
+				state.stop().animate({fill: currHoverColor}, transitionTime);
 			}
 			// Exit effect
 			var out = function(){
@@ -385,7 +447,7 @@ setInterval(function(){
 
 	};
 
-}, flipSpeed);
+}, currFlipSpeed);
 
 
 

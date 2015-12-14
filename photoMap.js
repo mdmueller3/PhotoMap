@@ -24,14 +24,14 @@ var slideNum = 0;
 var lineColor = "black";
 var fillColor = "white";
 
-function photomap(posX, posY, width, height, scale, mapName){
+var scale = 1;
+
+function photomap(posX, posY, width, height, mapName){
 
 	var paper;
 	if(typeof(posX) === 'string'){
 		paper = Raphael(posX, posY, width);
-		mapName = scale;
-		scale = height;
-
+		mapName = height;
 	}
 	else{
 		paper = Raphael(posX,posY,width,height);
@@ -50,11 +50,6 @@ function photomap(posX, posY, width, height, scale, mapName){
 		ids.push(path); // ID ('hi')
 		states.push(state); // Raphael object
 
-		var tfm = 'S'.concat(scale).concat(',').concat(scale).concat(',0,0');
-
-
-		state.transform(tfm);
-
 		numImages[index] = 0;
 		countImages(path, index);
 		pullImages(state, ids[state.id]);
@@ -68,6 +63,17 @@ function photomap(posX, posY, width, height, scale, mapName){
 		exitColor = fillColor;
 		transitionTime = transition;
 	};
+
+	this.setScale = function(newScale){
+		scale = newScale;
+		var tfm = 'S'.concat(scale).concat(',').concat(scale).concat(',0,0');
+
+
+		// for Each
+		elementSet.forEach(function(state){
+			state.transform(tfm);
+		});
+	}
 
 	this.setSize = function(width, height){
 		paper.setSize(width, height);

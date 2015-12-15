@@ -16,10 +16,29 @@ This is where all the paths for your maps come from. The format of the SVG file 
 # Usage
 Creating a photomap variable is very simple:
 ```
-var map = photomap(100,200,1000,500,1,usMap);
-//photomap(posX,posY,width,height,scale,variable)
+var map = photomap(100,200,1000,500, varName);
+//photomap(posX,posY,width,height,variable)
 ```
-The above code creates a map with width = 1000 and height = 500 at position (100, 200).
+The above code creates an absoutely-positioned map with width = 1000 and height = 500 at position (100, 200).
+
+Alternatively, you can insert photomaps into div elements:
+
+**HTML**
+```
+<div id = "mapHolder">
+</div>
+```
+
+**JavaScript**
+```
+var map = photomap("mapHolder", 1000, 500, varName);
+//photomap(element, width, height, variable)
+```
+
+The variable in the constructor is the name of the variable holding all of the path elements. For example, to use the usmap.svg file provided, one would use:
+```
+var map = photomap("mapHolder", 1000, 500, usMap);
+```
 
 # Slideshow
 When elements with images are clicked on, a simple slideshow interface will pop up to allow you to show the images on a bigger screen. An example is shown below

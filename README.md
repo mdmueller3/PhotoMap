@@ -11,7 +11,10 @@ There are 4 important things to include in your HTML file in order to use PhotoM
 - The PhotoMap.js file
 
 # The SVG File
-This is where all the paths for your maps come from. The format of the SVG file is important, so if you are going to add you're own follow the template used by the ones provided. The ids correspond to the names of the folders in the "images" folder, which is where your images will be placesd.
+This is where all the paths for your maps come from. The format of the SVG file is important, so if you are going to add your own follow the template provided. The IDs correspond to the names of the folders in the "images" folder, which is where your images will be placed. The images should be named in incrementing order, designating when they should appear. So for example, if you had 3 pictures for your trip to Hawaii, they should be named:
+`0.jpg`,
+`1.jpg`,
+`2.jpg`. Note, the labeling is zero-based.
 
 # Usage
 Creating a photomap variable is very simple:
@@ -50,4 +53,5 @@ When elements with images are clicked on, a simple slideshow interface will pop 
 - More customization
 - Faster load times
 - More provided SVG maps
+- PNG support
 

@@ -41,12 +41,15 @@ var map = photomap("mapHolder", 1000, 1000, norway);
 
 ### A couple notes
 
-- The canvas size of the photomap DOES NOT scale the SVG map, but will instead cut it off if the canvas is too small. In order to prevent this, use map.scale(multiplier)
+- The canvas size of the photomap DOES NOT scale the SVG map, but will instead cut it off if the canvas is too small. In order to prevent this, either increase the size of the canvas or scale the map.
 ```
+// Option 1 - Increase canvas size
+map.setSize(1500, 1500);
+// Option 2 - Scale the SVG map
 map.scale(0.5);
 ```
 
-- The variable at the end of the constructor (in this case "norway") is simply the variable used in your SVG file. If you don't know the name of the variable and you're too afraid to look, using the name of the file (no extension & lowercase) is a safe bet. Here's Australia.
+- The variable at the end of the constructor (in this case "norway") is simply the variable used in your SVG file. If you don't know the name of the variable and you don't want to look, using the name of the file (no extension & lowercase) is a safe bet. Here's Australia.
 
 ```
 var map = photomap("mapHolder", 1000, 1000, australia);
@@ -54,11 +57,11 @@ var map = photomap("mapHolder", 1000, 1000, australia);
 
 
 # The SVG File
-This is where all the paths for your maps come from. The format of the SVG file is important, so if you are going to add your own follow the template provided. The IDs correspond to the names of the folders in the "images" folder, which is where your images will be placed. More on this below. Inside the SVGs folder there are a lot of provided SVGs. If you're looking to speed up performance, it's not a bad idea to delete any of these that you won't be using. 
+This is where all the paths for your maps come from. The format of the SVG file is important, so if you are going to add your own follow the template provided. The IDs correspond to the names of the folders in the "images" folder, which is where your images will be placed. More on this below. Inside the folder 'SVGs' there are many provided maps. If you're looking to speed up performance, it's not a bad idea to delete any of these that you won't be using. 
 
 In order to import SVGs, just place them in that folder.
 
-**If any of the SVG files provided don't work and you're feeling generous, submit an issue so that it can be fixed**
+**Please submit an issue if you notice any SVG maps not working properly**
 
 # Importing Your Images
 The goal of PhotoMap is to display your travels in a unique and understandable way. Because of that, it's useful to use images from the places you've been. All of the images used in PhotoMap will be stored in the folder 'images'. Inside here, you'll have to create a bunch of subfolders, each containing the images designated for that particular country/state/region. The names of the folders cannot be random. They must use the names of the paths, provided in your SVG file. The images inside these subfolders should be named in incrementing order, designating when they should appear. So for example, if you had 3 pictures for your trip to Hawaii, they should be named:

@@ -13,14 +13,14 @@ There are 4 important things to include in your HTML file in order to use PhotoM
 Here's a typical import for the SVG map of Norway
 
 ```
-<link rel="stylesheet" href = "style.css"> <!-- Add some style -->
-<script src = "modifiedRaphael.js"></script> <!-- Raphael with PhotoMap functionality -->
-<script src = "SVGs/norway.js"></script> <!-- SVG map of Norway -->
-<script src = "photoMap.js"></script> <!-- PhotoMap library -->
+<link rel = "stylesheet" href = "style.css">      <!-- Add some style -->
+<script src = "modifiedRaphael.js"></script>      <!-- Raphael with PhotoMap functionality -->
+<script src = "SVGs/norway.js"></script>          <!-- SVG map of Norway -->
+<script src = "photoMap.js"></script>             <!-- PhotoMap library -->
 ```
 
 # Using PhotoMap
-Placing a map inside your webpage is incredibly easy
+Placing a map inside your website is incredibly easy
 ```
 var map = photomap(0, 0, 1000, 1000, norway);
 ```
@@ -41,7 +41,7 @@ var map = photomap("mapHolder", 1000, 1000, norway);
 
 ### A couple notes
 
-- The canvas size of the photomap DOES NOT scale the SVG map, but will instead cut it off if the canvas is too small. In order to prevent this, use photomap.scale(multiplier)
+- The canvas size of the photomap DOES NOT scale the SVG map, but will instead cut it off if the canvas is too small. In order to prevent this, use map.scale(multiplier)
 ```
 map.scale(0.5);
 ```

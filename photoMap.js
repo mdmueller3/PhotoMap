@@ -314,7 +314,7 @@ function pullImages(state, id){
 				// RIGHT ARROW STUFF
 				var rightArrowHolder = document.getElementById('right');
 				var rightArrow = new Image();
-				rightArrow.src = "logos/right.png";
+				rightArrow.src = "slideshowMedia/right.png";
 				rightArrow.id = "rightArrow";
 
 
@@ -341,7 +341,7 @@ function pullImages(state, id){
 				// LEFT ARROW STUFF
 				var leftArrowHolder = document.getElementById('left');
 				var leftArrow = new Image();
-				leftArrow.src = "logos/left.png";
+				leftArrow.src = "slideshowMedia/left.png";
 				leftArrow.id = "leftArrow";
 
 				var leftClicked = function(){
@@ -365,7 +365,7 @@ function pullImages(state, id){
 				// X STUFF
 				var xHolder = document.getElementById('xHolder');
 				var x = new Image();
-				x.src = "logos/x.png";
+				x.src = "slideshowMedia/x.png";
 				x.id = "x";
 				x.onclick = function(){
 					imageNum = 0;

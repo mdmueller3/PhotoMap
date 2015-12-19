@@ -4,14 +4,15 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 
-	<link rel="stylesheet" href = "style.css">
 
 	<!-- Raphael -->
 	<script src = "modifiedRaphael.js"></script>
 	
 	<!-- SVG files -->
-	<script src = "SVGs/world.js"></script>
-	<script src = "SVGs/usMap.js"></script>
+	<script src = "SVGs/australia.js"></script>
+
+	<!-- Style Me -->
+	<link rel="stylesheet" href = "style.css">
 
 	<!-- JS file -->
 	<script src = "photoMap.js"></script>
@@ -20,10 +21,12 @@
 </head>
 <body>
 
+	<div id = "mapHolder"></div>
+	</div>
+	
 	<script>
-		var map = photomap(0,0,1000,600,1,usMap);
-		map.setLineColor("gray");
-		map.setHoverEffect("#eeffff", 50);
+		var map = photomap("mapHolder",1000,1000,australia);
+		map.hoverEffect("#eeffff", 50);
 	</script>
 
 	<div id = "slideshowBackground">

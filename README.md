@@ -92,4 +92,5 @@ When elements with images are clicked on, a simple slideshow interface will pop 
 - Faster load times
 - PNG support
 - A better slideshow interface
+- More fill styles (tile, scale)
 

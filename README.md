@@ -4,7 +4,7 @@
 ![A map of the US](screenshots/map.png)
 
 # Including PhotoMap In Your HTML File
-There are 4 important things to include in your HTML file in order to use PhotoMap
+There are 4 important dependencies to include in your HTML file in order to use PhotoMap
 - The CSS file provided (or modify your own)
 - A modified Raphael.js file
 - An SVG file containing your map information (in the right format)
@@ -89,8 +89,7 @@ When elements with images are clicked on, a simple slideshow interface will pop 
 ![A slideshow sample from Alaska](screenshots/slideshow.png)
 
 # Improvements to come:
-- Faster load times
-- PNG support
+- Support for more image formats
 - A better slideshow interface
 - More fill styles (tile, scale)
 - A new kind of photomap, similar to iOS map for displaying photos

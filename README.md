@@ -88,9 +88,3 @@ When elements with images are clicked on, a simple slideshow interface will pop 
 
 ![A slideshow sample from Alaska](screenshots/slideshow.png)
 
-# Improvements to come:
-- Support for more image formats
-- A better slideshow interface
-- More fill styles (tile, scale)
-- A new kind of photomap, similar to iOS map for displaying photos
-

@@ -4,7 +4,7 @@
 ![A map of the US](screenshots/map.png)
 
 # Including PhotoMap In Your HTML File
-There are 4 important dependencies to include in your HTML file in order to use PhotoMap
+There are 4 important elements to include in your HTML file in order to use PhotoMap
 - The CSS file provided (or modify your own)
 - A modified Raphael.js file
 - An SVG file containing your map information (in the right format)
